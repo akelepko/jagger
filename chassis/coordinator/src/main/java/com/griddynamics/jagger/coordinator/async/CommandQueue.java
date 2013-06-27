@@ -25,14 +25,14 @@ import com.google.common.collect.ImmutableList;
 import com.griddynamics.jagger.coordinator.Command;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CommandQueue<C extends Command<R>, R extends Serializable> implements Command<QueueResult<R>> {
-    private Iterable<C> commands;
+    private final List<C> commands;
 
     public CommandQueue(Iterable<C> commands) {
-        Preconditions.checkArgument(commands.iterator().hasNext());
-
         this.commands = ImmutableList.copyOf(commands);
+        Preconditions.checkArgument(!this.commands.isEmpty());
     }
 
     public Iterable<C> getCommands() {
@@ -41,7 +41,7 @@ public class CommandQueue<C extends Command<R>, R extends Serializable> implemen
 
     @Override
     public String getSessionId() {
-        return commands.iterator().next().getSessionId();
+        return commands.get(0).getSessionId();
 
     }
 

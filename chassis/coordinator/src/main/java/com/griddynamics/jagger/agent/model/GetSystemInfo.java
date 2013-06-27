@@ -20,28 +20,12 @@
 
 package com.griddynamics.jagger.agent.model;
 
-import com.griddynamics.jagger.coordinator.Command;
+import com.griddynamics.jagger.coordinator.AbstractCommand;
 
 import java.util.ArrayList;
 
-public class GetSystemInfo implements Command<ArrayList<SystemInfo>> {
-
-    private String sessionId;
-
+public class GetSystemInfo extends AbstractCommand<ArrayList<SystemInfo>> {
     public GetSystemInfo(String sessionId) {
-        this.sessionId = sessionId;
+        super(sessionId);
     }
-
-    public GetSystemInfo() {
-    }
-
-    @Override
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
 }

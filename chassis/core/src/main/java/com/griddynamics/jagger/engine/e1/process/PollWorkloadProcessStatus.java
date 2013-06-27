@@ -20,44 +20,15 @@
 
 package com.griddynamics.jagger.engine.e1.process;
 
-import com.griddynamics.jagger.coordinator.Command;
+import com.griddynamics.jagger.coordinator.AbstractProcessCommand;
 
-public class PollWorkloadProcessStatus implements Command<Integer> {
+public class PollWorkloadProcessStatus extends AbstractProcessCommand<Integer> {
 
-    private String sessionId;
-    private String processId;
+    public PollWorkloadProcessStatus(String sessionId, String processId) {
+        super(sessionId, processId);
+    }
 
     public static PollWorkloadProcessStatus create(String sessionId, String processId) {
-        PollWorkloadProcessStatus result = new PollWorkloadProcessStatus(sessionId);
-        result.setProcessId(processId);
-        return result;
-    }
-
-    public PollWorkloadProcessStatus() {
-    }
-
-    public PollWorkloadProcessStatus(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    @Override
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setProcessId(String processId) {
-        this.processId = processId;
-    }
-
-    public String getProcessId() {
-        return processId;
-    }
-
-    @Override
-    public String toString() {
-        return "PollWorkloadProcessStatus{" +
-                "sessionId='" + sessionId + '\'' +
-                ", processId='" + processId + '\'' +
-                '}';
+        return new PollWorkloadProcessStatus(sessionId, processId);
     }
 }

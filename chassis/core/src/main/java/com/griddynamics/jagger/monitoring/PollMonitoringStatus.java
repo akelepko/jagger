@@ -20,34 +20,15 @@
 
 package com.griddynamics.jagger.monitoring;
 
+import com.griddynamics.jagger.coordinator.AbstractProcessCommand;
 
-import com.griddynamics.jagger.coordinator.Command;
+public class PollMonitoringStatus extends AbstractProcessCommand<MonitoringStatus> {
 
-public class PollMonitoringStatus implements Command<MonitoringStatus> {
-    private String sessionId;
-    private String processId;
+    public PollMonitoringStatus(String sessionId, String processId) {
+        super(sessionId, processId);
+    }
 
     public static PollMonitoringStatus create(String sessionId, String processId) {
-        PollMonitoringStatus result = new PollMonitoringStatus();
-        result.setSessionId(sessionId);
-        result.setProcessId(processId);
-        return result;
-    }
-
-    @Override
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public String getProcessId() {
-        return processId;
-    }
-
-    public void setProcessId(String processId) {
-        this.processId = processId;
+        return new PollMonitoringStatus(sessionId, processId);
     }
 }

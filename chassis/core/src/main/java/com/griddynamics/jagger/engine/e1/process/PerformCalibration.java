@@ -20,29 +20,22 @@
 
 package com.griddynamics.jagger.engine.e1.process;
 
-import com.griddynamics.jagger.coordinator.Command;
+import com.griddynamics.jagger.coordinator.AbstractCommand;
 import com.griddynamics.jagger.invoker.ScenarioFactory;
 
-public class PerformCalibration implements Command<Boolean> {
-    private String sessionId;
+public class PerformCalibration extends AbstractCommand<Boolean> {
     private String taskId;
     private ScenarioFactory<Object, Object, Object> scenarioFactory;
 
+    protected PerformCalibration(String sessionId) {
+        super(sessionId);
+    }
+
     public static PerformCalibration create(String sessionId, String taskId, ScenarioFactory<Object, Object, Object> scenarioFactory) {
-        PerformCalibration result = new PerformCalibration();
-        result.setSessionId(sessionId);
+        PerformCalibration result = new PerformCalibration(sessionId);
         result.setTaskId(taskId);
         result.setScenarioFactory(scenarioFactory);
         return result;
-    }
-
-    @Override
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
     }
 
     public ScenarioFactory<Object, Object, Object> getScenarioFactory() {

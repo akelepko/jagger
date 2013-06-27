@@ -20,44 +20,27 @@
 
 package com.griddynamics.jagger.engine.e1.process;
 
-import com.griddynamics.jagger.coordinator.Command;
+import com.griddynamics.jagger.coordinator.AbstractProcessCommand;
 import com.griddynamics.jagger.engine.e1.scenario.WorkloadConfiguration;
 
-public class ChangeWorkloadConfiguration implements Command<Boolean> {
-    private String sessionId;
-    private String processId;
+public class ChangeWorkloadConfiguration extends AbstractProcessCommand<Boolean> {
     private WorkloadConfiguration configuration;
 
-    public static ChangeWorkloadConfiguration create(String sessionId, String processId, WorkloadConfiguration configuration) {
-        ChangeWorkloadConfiguration result = new ChangeWorkloadConfiguration();
-        result.setSessionId(sessionId);
-        result.setProcessId(processId);
-        result.setConfiguration(configuration);
-        return result;
+    public ChangeWorkloadConfiguration(String sessionId, String processId) {
+        super(sessionId, processId);
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public static ChangeWorkloadConfiguration create(String sessionId, String processId, WorkloadConfiguration configuration) {
+        ChangeWorkloadConfiguration result = new ChangeWorkloadConfiguration(sessionId, processId);
+        result.setConfiguration(configuration);
+        return result;
     }
 
     public void setConfiguration(WorkloadConfiguration configuration) {
         this.configuration = configuration;
     }
 
-    @Override
-    public String getSessionId() {
-        return sessionId;
-    }
-
     public WorkloadConfiguration getConfiguration() {
         return configuration;
-    }
-
-    public String getProcessId() {
-        return processId;
-    }
-
-    public void setProcessId(String processId) {
-        this.processId = processId;
     }
 }

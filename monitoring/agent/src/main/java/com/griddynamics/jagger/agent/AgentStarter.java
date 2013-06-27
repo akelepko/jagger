@@ -54,9 +54,8 @@ public class AgentStarter {
         }
         log.info("");
 
-        Sigar sigar = new Sigar();
         try {
-            sigar.getMem();
+            new Sigar().getMem();
         } catch (SigarException e) {
             log.error("", e);
         }

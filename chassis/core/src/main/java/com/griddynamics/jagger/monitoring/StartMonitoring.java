@@ -20,29 +20,22 @@
 
 package com.griddynamics.jagger.monitoring;
 
-import com.griddynamics.jagger.coordinator.Command;
+import com.griddynamics.jagger.coordinator.AbstractCommand;
 import com.griddynamics.jagger.coordinator.NodeId;
 
-public class StartMonitoring implements Command<String> {
-    private String sessionId;
+public class StartMonitoring extends AbstractCommand<String> {
     private NodeId agentNode;
     private String taskId;
 
+    public StartMonitoring(String sessionId) {
+        super(sessionId);
+    }
+
     public static StartMonitoring create(String sessionId, NodeId agentNode, String taskId) {
-        StartMonitoring command = new StartMonitoring();
-        command.sessionId = sessionId;
+        StartMonitoring command = new StartMonitoring(sessionId);
         command.agentNode = agentNode;
         command.taskId = taskId;
         return command;
-    }
-
-    @Override
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
     }
 
     public NodeId getAgentNode() {

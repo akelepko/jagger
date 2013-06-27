@@ -104,7 +104,7 @@ public class WorkerConfigurationTest {
 
     }
 
-    public static class FirstCommand implements Command<Serializable> {
+    private static class FirstCommand implements Command<Serializable> {
 
         @Override
         public String getSessionId() {
@@ -113,7 +113,7 @@ public class WorkerConfigurationTest {
 
     }
 
-    public static class SecondCommand implements Command<Serializable> {
+    private static class SecondCommand implements Command<Serializable> {
 
         @Override
         public String getSessionId() {

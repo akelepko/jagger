@@ -20,45 +20,15 @@
 
 package com.griddynamics.jagger.engine.e1.process;
 
-import com.griddynamics.jagger.coordinator.Command;
+import com.griddynamics.jagger.coordinator.AbstractProcessCommand;
 
-public class StopWorkloadProcess implements Command<Integer> {
+public class StopWorkloadProcess extends AbstractProcessCommand<Integer> {
 
-    private String sessionId;
-    private String processId;
+    public StopWorkloadProcess(String sessionId, String processId) {
+        super(sessionId, processId);
+    }
 
     public static StopWorkloadProcess create(String sessionId, String processId) {
-        StopWorkloadProcess stopProcess = new StopWorkloadProcess(sessionId);
-
-        stopProcess.setProcessId(processId);
-        return stopProcess;
-    }
-
-    public StopWorkloadProcess() {
-    }
-
-    public StopWorkloadProcess(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    @Override
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setProcessId(String processId) {
-        this.processId = processId;
-    }
-
-    public String getProcessId() {
-        return processId;
-    }
-
-    @Override
-    public String toString() {
-        return "StopWorkloadProcess{" +
-                "sessionId='" + sessionId + '\'' +
-                ", processId='" + processId + '\'' +
-                '}';
+        return new StopWorkloadProcess(sessionId, processId);
     }
 }

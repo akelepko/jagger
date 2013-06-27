@@ -20,29 +20,20 @@
 
 package com.griddynamics.jagger.agent.model;
 
-import com.griddynamics.jagger.coordinator.Command;
+import com.griddynamics.jagger.coordinator.AbstractCommand;
 import com.griddynamics.jagger.diagnostics.thread.sampling.ProfileDTO;
 
 /**
  * @author Alexey Kiselyov
  *         Date: 23.08.11
  */
-public class GetCollectedProfileFromSuT implements Command<ProfileDTO> {
+public class GetCollectedProfileFromSuT extends AbstractCommand<ProfileDTO> {
 
-    private String sessionId;
-
-    @Override
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public GetCollectedProfileFromSuT(String sessionId) {
+        super(sessionId);
     }
 
     public static GetCollectedProfileFromSuT create(String sessionId) {
-        GetCollectedProfileFromSuT command = new GetCollectedProfileFromSuT();
-        command.setSessionId(sessionId);
-        return command;
+        return new GetCollectedProfileFromSuT(sessionId);
     }
 }

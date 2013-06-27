@@ -20,7 +20,7 @@
 
 package com.griddynamics.jagger.agent.model;
 
-import com.griddynamics.jagger.coordinator.Command;
+import com.griddynamics.jagger.coordinator.AbstractCommand;
 import com.griddynamics.jagger.coordinator.VoidResult;
 
 import java.io.Serializable;
@@ -30,26 +30,20 @@ import java.util.Map;
  * @author Alexey Kiselyov
  *         Date: 05.09.11
  */
-public class ManageAgent implements Command<VoidResult> {
+public class ManageAgent extends AbstractCommand<VoidResult> {
 
     public enum ActionProp {
-        WAIT_BEFORE(Long.class, 60000L),
-        NEW_MESSAGE_SERVICE_URL(String.class, ""),
-        HALT(Boolean.class, false);
+        WAIT_BEFORE(60000L),
+        NEW_MESSAGE_SERVICE_URL(""),
+        HALT(false);
 
-        private Class clazz;
-        private Serializable defaultValue;
-
-        public Class getClazz() {
-            return clazz;
-        }
+        private final Serializable defaultValue;
 
         public Serializable getDefaultValue() {
             return defaultValue;
         }
 
-        <S extends Serializable> ActionProp(Class<S> clazz, S defaultValue) {
-            this.clazz = clazz;
+        ActionProp(Serializable defaultValue) {
             this.defaultValue = defaultValue;
         }
     }
@@ -65,23 +59,9 @@ public class ManageAgent implements Command<VoidResult> {
 
     private Map<ActionProp, Serializable> params;
 
-    private String sessionId;
-
     public ManageAgent(String sessionId, Map<ActionProp, Serializable> params) {
-        this.sessionId = sessionId;
+        super(sessionId);
         this.params = params;
-    }
-
-    public ManageAgent() {
-    }
-
-    @Override
-    public String getSessionId() {
-        return this.sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
     }
 
     public Map<ActionProp, Serializable> getParams() {
@@ -92,7 +72,7 @@ public class ManageAgent implements Command<VoidResult> {
     public String toString() {
         return "ManageAgent{" +
                 "params=" + params +
-                ", sessionId='" + sessionId + '\'' +
+                ", sessionId='" + getSessionId() + '\'' +
                 '}';
     }
 }

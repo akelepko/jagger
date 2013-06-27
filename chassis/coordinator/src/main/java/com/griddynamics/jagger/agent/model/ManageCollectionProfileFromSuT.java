@@ -20,7 +20,7 @@
 
 package com.griddynamics.jagger.agent.model;
 
-import com.griddynamics.jagger.coordinator.Command;
+import com.griddynamics.jagger.coordinator.AbstractCommand;
 import com.griddynamics.jagger.coordinator.VoidResult;
 
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.List;
  * @author Alexey Kiselyov
  *         Date: 23.08.11
  */
-public class ManageCollectionProfileFromSuT implements Command<VoidResult> {
+public class ManageCollectionProfileFromSuT extends AbstractCommand<VoidResult> {
 
     public enum ManageHotSpotMethodsFromSuT {
         START_POLLING,
@@ -41,8 +41,6 @@ public class ManageCollectionProfileFromSuT implements Command<VoidResult> {
     private List<String> excludePatterns;
     private ManageHotSpotMethodsFromSuT action;
 
-    private String sessionId;
-
     public ManageHotSpotMethodsFromSuT getAction() {
         return this.action;
     }
@@ -52,21 +50,9 @@ public class ManageCollectionProfileFromSuT implements Command<VoidResult> {
     }
 
     public ManageCollectionProfileFromSuT(String sessionId, ManageHotSpotMethodsFromSuT action, long profilerPollingInterval) {
-        this.sessionId = sessionId;
+        super(sessionId);
         this.action = action;
         this.profilerPollingInterval = profilerPollingInterval;
-    }
-
-    public ManageCollectionProfileFromSuT() {
-    }
-
-    @Override
-    public String getSessionId() {
-        return this.sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
     }
 
     public long getProfilerPollingInterval() {
@@ -100,7 +86,7 @@ public class ManageCollectionProfileFromSuT implements Command<VoidResult> {
                 ", includePatterns=" + includePatterns +
                 ", excludePatterns=" + excludePatterns +
                 ", action=" + action +
-                ", sessionId='" + sessionId + '\'' +
+                ", sessionId='" + getSessionId() + '\'' +
                 '}';
     }
 }

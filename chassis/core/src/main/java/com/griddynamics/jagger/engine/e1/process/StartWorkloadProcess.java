@@ -20,16 +20,15 @@
 
 package com.griddynamics.jagger.engine.e1.process;
 
-import com.griddynamics.jagger.coordinator.Command;
+import com.griddynamics.jagger.coordinator.AbstractCommand;
 import com.griddynamics.jagger.engine.e1.scenario.KernelSideObjectProvider;
 import com.griddynamics.jagger.engine.e1.scenario.ScenarioCollector;
 import com.griddynamics.jagger.invoker.ScenarioFactory;
 
 import java.util.List;
 
-public class StartWorkloadProcess implements Command<String> {
+public class StartWorkloadProcess extends AbstractCommand<String> {
     private ScenarioFactory<Object, Object, Object> scenarioFactory;
-    private String sessionId;
     private ScenarioContext scenarioContext;
     private List<KernelSideObjectProvider<ScenarioCollector<Object, Object, Object>>> collectors;
     private int poolSize;
@@ -39,14 +38,9 @@ public class StartWorkloadProcess implements Command<String> {
     }
 
     private StartWorkloadProcess(String sessionId, ScenarioContext scenarioContext, int poolSize) {
-        this.sessionId = sessionId;
+        super(sessionId);
         this.scenarioContext = scenarioContext;
         this.poolSize = poolSize;
-    }
-
-    @Override
-    public String getSessionId() {
-        return sessionId;
     }
 
     public String getName() {
@@ -89,7 +83,7 @@ public class StartWorkloadProcess implements Command<String> {
     public String toString() {
         return "StartWorkloadProcess{" +
                 "scenarioFactory=" + scenarioFactory +
-                ", sessionId='" + sessionId + '\'' +
+                ", sessionId='" + getSessionId() + '\'' +
                 ", scenarioContext=" + scenarioContext +
                 ", collectors=" + collectors +
                 ", poolSize=" + poolSize +

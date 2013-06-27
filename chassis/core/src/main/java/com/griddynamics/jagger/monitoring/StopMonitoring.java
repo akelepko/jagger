@@ -20,34 +20,16 @@
 
 package com.griddynamics.jagger.monitoring;
 
-import com.griddynamics.jagger.coordinator.Command;
+import com.griddynamics.jagger.coordinator.AbstractProcessCommand;
 import com.griddynamics.jagger.util.Nothing;
 
-public class StopMonitoring implements Command<Nothing> {
-    private String sessionId;
-    private String processId;
+public class StopMonitoring extends AbstractProcessCommand<Nothing> {
+
+    public StopMonitoring(String sessionId, String processId) {
+        super(sessionId, processId);
+    }
 
     public static StopMonitoring create(String sessionId, String processId) {
-        StopMonitoring command = new StopMonitoring();
-        command.setSessionId(sessionId);
-        command.setProcessId(processId);
-        return command;
-    }
-
-    @Override
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public String getProcessId() {
-        return processId;
-    }
-
-    public void setProcessId(String processId) {
-        this.processId = processId;
+        return new StopMonitoring(sessionId, processId);
     }
 }
