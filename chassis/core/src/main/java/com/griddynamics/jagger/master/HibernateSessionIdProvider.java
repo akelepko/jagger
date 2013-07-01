@@ -20,15 +20,14 @@
 
 package com.griddynamics.jagger.master;
 
-import java.util.List;
-
+import com.griddynamics.jagger.exception.TechnicalException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import com.griddynamics.jagger.exception.TechnicalException;
+import java.util.List;
 
 public class HibernateSessionIdProvider extends HibernateDaoSupport implements SessionIdProvider {
 	private final Object lock = new Object();
-	private String sessionId;
+	private volatile String sessionId;
     private String sessionName;
     private String sessionComment;
 
