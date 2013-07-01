@@ -60,9 +60,10 @@ public class HibernateKeyValueStorage extends HibernateDaoSupport implements Key
         getHibernateTemplate().persist(createKeyValue(namespace, key, value));
     }
 
+    @Override
     public void putAll(Namespace namespace, Multimap<String, Object> valuesMap) {
         Session session = null;
-        int count = 0;
+        int count = getHibernateBatchSize();
         try {
             session = getHibernateTemplate().getSessionFactory().openSession();
             session.beginTransaction();
@@ -70,10 +71,10 @@ public class HibernateKeyValueStorage extends HibernateDaoSupport implements Key
                 Collection<Object> values = valuesMap.get(key);
                 for (Object val : values) {
                     session.save(createKeyValue(namespace, key, val));
-                    count++;
-                    if (count % getHibernateBatchSize() == 0) {
+                    if (--count <= 0) {
                         session.flush();
                         session.clear();
+                        count = getHibernateBatchSize();
                     }
                 }
             }
